@@ -36,6 +36,17 @@ const revenueData = [
   { name: 'Jun', total: 3800 },
 ]
 
+type Props = {
+  id: string;
+  name: string;
+  email: string;
+  company: string;
+  marketingSpend: string;
+  phone: string;
+  location: string;
+  content: string;
+}
+
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("overview")
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -45,7 +56,7 @@ export default function AdminDashboard() {
   
   const contactQuery = useGetContacts();
   const contactData = contactQuery.data || [];
-  const [filteredContacts, setFilteredContacts] = useState(contactData)
+  const [filteredContacts, setFilteredContacts] = useState<Props[]>(contactData)
 
   useEffect(() => {
     const handleResize = () => {
@@ -63,7 +74,7 @@ export default function AdminDashboard() {
   }, [])
 
   useEffect(() => {
-    const results = contactData.filter(contact =>
+    const results = contactData.filter((contact: Props) =>
         Object.values(contact).some(value =>
             value !== null && value !== undefined && // Check for null or undefined
             value.toString().toLowerCase().includes(searchTerm.toLowerCase())
