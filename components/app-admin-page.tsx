@@ -36,27 +36,29 @@ const revenueData = [
   { name: 'Jun', total: 3800 },
 ]
 
-type Props = {
-  id: string;
-  name: string;
-  email: string;
-  company: string;
-  marketingSpend: string;
-  phone: string;
-  location: string;
-  content: string;
+interface Contact {
+  id: number
+  name: string
+  email: string
+  phone: string
+  company: string
+  marketingSpend: string
+  location: string
+  content: string
 }
 
 export default function AdminDashboard() {
+
+  const contactsQuery = useGetContacts()
+  const contacts: Contact[] = contactsQuery.data || []
+  
   const [activeTab, setActiveTab] = useState("overview")
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
-  
+  const [filteredContacts, setFilteredContacts] = useState(contacts)
+
+
   const toggleSidebar = () => setSidebarOpen(prevState => !prevState)
-  
-  const contactQuery = useGetContacts();
-  const contactData = contactQuery.data || [];
-  const [filteredContacts, setFilteredContacts] = useState<Props[]>(contactData)
 
   useEffect(() => {
     const handleResize = () => {
@@ -74,15 +76,14 @@ export default function AdminDashboard() {
   }, [])
 
   useEffect(() => {
-    const results = contactData.filter((contact: Props) =>
-        Object.values(contact).some(value =>
-            value !== null && value !== undefined && // Check for null or undefined
-            value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-        )
-    );
-    setFilteredContacts(results);
-}, [searchTerm, contactData]); // Add contactData as a dependency
-
+    const results = contacts.filter(contact =>
+      Object.values(contact).some(value =>
+          value !== null && value !== undefined && // Check for null or undefined
+          value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
+  );
+    setFilteredContacts(results)
+  }, [searchTerm,contacts])
 
   return (
     <div className="flex h-screen bg-gray-100">
