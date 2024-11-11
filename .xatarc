@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Antima-Singh-s-workspace-i3225t.us-east-1.xata.sh/db/skillo",
+  "codegen": {
+    "output": "db/xata.ts"
+  }
+}

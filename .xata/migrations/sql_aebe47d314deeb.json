@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_aebe47d314deeb",
+    "operations": [
+      {
+        "sql": {
+          "up": "CREATE TABLE IF NOT EXISTS news_table (id text PRIMARY KEY NOT NULL, name text NOT NULL, email text NOT NULL, phone text NOT NULL, company text NOT NULL, marketing_spend text, location text NOT NULL, content text NOT NULL)"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_aebe47d314deeb",
+  "parent": "mig_csosi7132vjpfm25jpog",
+  "schema": "public",
+  "startedAt": "2024-11-11T09:14:32.019015Z"
+}

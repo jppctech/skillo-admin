@@ -24,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Bell, DollarSign, LayoutDashboard, Mail, Menu, Search, Settings, Users, X } from 'lucide-react'
+import { useGetContacts } from '@/features/api/use-get-contacts'
 
 // Mock data
 const revenueData = [
@@ -35,61 +36,16 @@ const revenueData = [
   { name: 'Jun', total: 3800 },
 ]
 
-interface Contact {
-  id: number
-  name: string
-  email: string
-  phone: string
-  companyName: string
-  currentMarketingSpends: string
-  location: string
-  interestedIn: string
-  date: string
-}
-
-const contacts: Contact[] = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "john@example.com",
-    phone: "+1 (555) 123-4567",
-    companyName: "Acme Inc.",
-    currentMarketingSpends: "$5,000",
-    location: "New York, NY",
-    interestedIn: "SEO, PPC",
-    date: "2023-06-01"
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    email: "jane@example.com",
-    phone: "+1 (555) 987-6543",
-    companyName: "TechCorp",
-    currentMarketingSpends: "$10,000",
-    location: "San Francisco, CA",
-    interestedIn: "Social Media, Content Marketing",
-    date: "2023-06-02"
-  },
-  {
-    id: 3,
-    name: "Bob Johnson",
-    email: "bob@example.com",
-    phone: "+1 (555) 246-8135",
-    companyName: "Global Solutions",
-    currentMarketingSpends: "$7,500",
-    location: "Chicago, IL",
-    interestedIn: "Email Marketing, Analytics",
-    date: "2023-06-03"
-  },
-]
-
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("overview")
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
-  const [filteredContacts, setFilteredContacts] = useState(contacts)
-
+  
   const toggleSidebar = () => setSidebarOpen(prevState => !prevState)
+  
+  const contactQuery = useGetContacts();
+  const contactData = contactQuery.data || [];
+  const [filteredContacts, setFilteredContacts] = useState(contactData)
 
   useEffect(() => {
     const handleResize = () => {
@@ -107,13 +63,15 @@ export default function AdminDashboard() {
   }, [])
 
   useEffect(() => {
-    const results = contacts.filter(contact =>
-      Object.values(contact).some(value =>
-        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    )
-    setFilteredContacts(results)
-  }, [searchTerm])
+    const results = contactData.filter(contact =>
+        Object.values(contact).some(value =>
+            value !== null && value !== undefined && // Check for null or undefined
+            value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        )
+    );
+    setFilteredContacts(results);
+}, [searchTerm, contactData]); // Add contactData as a dependency
+
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -278,7 +236,6 @@ export default function AdminDashboard() {
                         <TableHead>Marketing Spend</TableHead>
                         <TableHead>Location</TableHead>
                         <TableHead>Interested In</TableHead>
-                        <TableHead>Date</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -287,11 +244,10 @@ export default function AdminDashboard() {
                           <TableCell className="font-medium">{contact.name}</TableCell>
                           <TableCell>{contact.email}</TableCell>
                           <TableCell>{contact.phone}</TableCell>
-                          <TableCell>{contact.companyName}</TableCell>
-                          <TableCell>{contact.currentMarketingSpends}</TableCell>
+                          <TableCell>{contact.company}</TableCell>
+                          <TableCell>{contact.marketingSpend}</TableCell>
                           <TableCell>{contact.location}</TableCell>
-                          <TableCell>{contact.interestedIn}</TableCell>
-                          <TableCell>{contact.date}</TableCell>
+                          <TableCell>{contact.content}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
