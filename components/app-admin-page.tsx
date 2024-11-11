@@ -124,7 +124,7 @@ export default function AdminDashboard() {
         }`}
       >
         <div className="p-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">Agency Admin</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Skillo Admin</h1>
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(false)}>
             <X className="h-6 w-6" />
           </Button>
