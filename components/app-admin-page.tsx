@@ -41,7 +41,7 @@ export default function AdminDashboard() {
   const contactsQuery = useGetContacts()
   const contacts = contactsQuery.data || []
   
-  const [activeTab, setActiveTab] = useState("overview")
+  const [activeTab, setActiveTab] = useState("contacts")
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [filteredContacts, setFilteredContacts] = useState(contacts)
@@ -89,7 +89,12 @@ export default function AdminDashboard() {
           </Button>
         </div>
         <nav className="mt-6">
-          {['overview', 'contacts', 'team', 'settings'].map((item) => (
+          {[
+            // 'overview', 
+            'contacts', 
+            // 'team', 
+            // 'settings'
+          ].map((item) => (
             <Button
               key={item}
               variant="ghost"
@@ -99,10 +104,10 @@ export default function AdminDashboard() {
                 if (window.innerWidth < 1024) setSidebarOpen(false)
               }}
             >
-              {item === 'overview' && <LayoutDashboard className="mr-2 h-4 w-4" />}
+              {/* {item === 'overview' && <LayoutDashboard className="mr-2 h-4 w-4" />} */}
               {item === 'contacts' && <Mail className="mr-2 h-4 w-4" />}
-              {item === 'team' && <Users className="mr-2 h-4 w-4" />}
-              {item === 'settings' && <Settings className="mr-2 h-4 w-4" />}
+              {/* {item === 'team' && <Users className="mr-2 h-4 w-4" />} */}
+              {/* {item === 'settings' && <Settings className="mr-2 h-4 w-4" />} */}
               {item.charAt(0).toUpperCase() + item.slice(1)}
             </Button>
           ))}
@@ -164,10 +169,10 @@ export default function AdminDashboard() {
         <div className="p-6">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="mb-4">
-              <TabsTrigger value="overview" className="transition-all duration-300 ease-in-out">Overview</TabsTrigger>
+              {/* <TabsTrigger value="overview" className="transition-all duration-300 ease-in-out">Overview</TabsTrigger> */}
               <TabsTrigger value="contacts" className="transition-all duration-300 ease-in-out">Contacts</TabsTrigger>
-              <TabsTrigger value="team" className="transition-all duration-300 ease-in-out">Team</TabsTrigger>
-              <TabsTrigger value="settings" className="transition-all duration-300 ease-in-out">Settings</TabsTrigger>
+              {/* <TabsTrigger value="team" className="transition-all duration-300 ease-in-out">Team</TabsTrigger> */}
+              {/* <TabsTrigger value="settings" className="transition-all duration-300 ease-in-out">Settings</TabsTrigger> */}
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
               <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
