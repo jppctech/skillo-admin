@@ -23,7 +23,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Bell, ChevronDown, DollarSign, Download, LayoutDashboard, Mail, Menu, Search, Settings, Users, X } from 'lucide-react'
+import { Bell, DollarSign, LayoutDashboard, Mail, Menu, Search, Settings, Users, X } from 'lucide-react'
 
 // Mock data
 const revenueData = [
