@@ -6,7 +6,7 @@ export const useGetContacts = () => {
     const query = useQuery({
         queryKey: ["contacts"],
         queryFn: async () => {
-            const response = await client.api.$get()
+            const response = await client.api.$get();
 
             if (!response.ok) {
                 throw new Error("Failed to fetch contacts")

@@ -7,7 +7,6 @@ import { db } from '@/db/drizzle';
 const app = new Hono()
     .get('/',
         async (c) => {
-
             const data = await db
                 .select({
                     id: newsTable.id,
