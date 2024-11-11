@@ -36,21 +36,10 @@ const revenueData = [
   { name: 'Jun', total: 3800 },
 ]
 
-interface Contact {
-  id: number
-  name: string
-  email: string
-  phone: string
-  company: string
-  marketingSpend: string
-  location: string
-  content: string
-}
-
 export default function AdminDashboard() {
 
   const contactsQuery = useGetContacts()
-  const contacts: Contact[] = contactsQuery.data || []
+  const contacts = contactsQuery.data || []
   
   const [activeTab, setActiveTab] = useState("overview")
   const [sidebarOpen, setSidebarOpen] = useState(false)
