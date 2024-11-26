@@ -8,6 +8,95 @@ import type {
 
 const tables = [
   {
+    name: "blog-table",
+    checkConstraints: {},
+    foreignKeys: {},
+    primaryKey: ["id"],
+    uniqueConstraints: {},
+    columns: [
+      {
+        name: "author",
+        type: "text",
+        notNull: true,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "author_avatar",
+        type: "text",
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "author_role",
+        type: "text",
+        notNull: true,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "content",
+        type: "text",
+        notNull: true,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "cover_image",
+        type: "text",
+        notNull: true,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "id",
+        type: "text",
+        notNull: true,
+        unique: true,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "publish_date",
+        type: "text",
+        notNull: false,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "slug",
+        type: "text",
+        notNull: true,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "sub_title",
+        type: "text",
+        notNull: true,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+      {
+        name: "title",
+        type: "text",
+        notNull: true,
+        unique: false,
+        defaultValue: null,
+        comment: "",
+      },
+    ],
+  },
+  {
     name: "news_table",
     checkConstraints: {},
     foreignKeys: {},
@@ -85,10 +174,14 @@ const tables = [
 export type SchemaTables = typeof tables;
 export type InferredTypes = SchemaInference<SchemaTables>;
 
+export type BlogTable = InferredTypes["blog-table"];
+export type BlogTableRecord = BlogTable & XataRecord;
+
 export type NewsTable = InferredTypes["news_table"];
 export type NewsTableRecord = NewsTable & XataRecord;
 
 export type DatabaseSchema = {
+  "blog-table": BlogTableRecord;
   news_table: NewsTableRecord;
 };
 

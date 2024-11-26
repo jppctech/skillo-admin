@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_260e5c5b23452a",
+    "operations": [
+      {
+        "sql": {
+          "up": "CREATE TABLE IF NOT EXISTS \"blog-table\" (id text PRIMARY KEY NOT NULL, slug text NOT NULL, title text NOT NULL, subtitle text NOT NULL, content text NOT NULL, author text NOT NULL, publishdate text NOT NULL, coverimage text NOT NULL)"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_260e5c5b23452a",
+  "parent": "sql_aebe47d314deeb",
+  "schema": "public",
+  "startedAt": "2024-11-26T10:42:37.464525Z"
+}

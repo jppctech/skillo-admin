@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_d0191983866a03",
+    "operations": [
+      {
+        "sql": {
+          "up": "ALTER TABLE \"blog-table\" RENAME COLUMN subtitle TO sub_title"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_d0191983866a03",
+  "parent": "sql_260e5c5b23452a",
+  "schema": "public",
+  "startedAt": "2024-11-26T11:01:03.349766Z"
+}

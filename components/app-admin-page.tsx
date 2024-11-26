@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Bell, DollarSign, LayoutDashboard, Mail, Menu, Search, Settings, Users, X } from 'lucide-react'
 import { useGetContacts } from '@/features/api/use-get-contacts'
+import { FaBloggerB } from "react-icons/fa";
+import BlogPostForm from './blog-form'
 
 // Mock data
 const revenueData = [
@@ -93,7 +95,8 @@ export default function AdminDashboard() {
             // 'overview', 
             'contacts', 
             // 'team', 
-            // 'settings'
+            // 'settings',
+            'Post Blog'
           ].map((item) => (
             <Button
               key={item}
@@ -108,6 +111,7 @@ export default function AdminDashboard() {
               {item === 'contacts' && <Mail className="mr-2 h-4 w-4" />}
               {/* {item === 'team' && <Users className="mr-2 h-4 w-4" />} */}
               {/* {item === 'settings' && <Settings className="mr-2 h-4 w-4" />} */}
+              {item === 'Post Blog' && <FaBloggerB className="mr-2 h-4 w-4"/>}
               {item.charAt(0).toUpperCase() + item.slice(1)}
             </Button>
           ))}
@@ -173,6 +177,7 @@ export default function AdminDashboard() {
               <TabsTrigger value="contacts" className="transition-all duration-300 ease-in-out">Contacts</TabsTrigger>
               {/* <TabsTrigger value="team" className="transition-all duration-300 ease-in-out">Team</TabsTrigger> */}
               {/* <TabsTrigger value="settings" className="transition-all duration-300 ease-in-out">Settings</TabsTrigger> */}
+              <TabsTrigger value="Post Blog" className="transition-all duration-300 ease-in-out">Post Blog</TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
               <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
@@ -317,6 +322,19 @@ export default function AdminDashboard() {
                   ))}
                   <Button className="transition-all duration-300 ease-in-out hover:bg-blue-600">Save Changes</Button>
                 </CardContent>
+              </Card>
+            </TabsContent>
+            <TabsContent value="Post Blog" className="space-y-4">
+              <Card className="transition-all duration-300 ease-in-out hover:shadow-lg">
+                <CardHeader>
+                  <CardTitle>Create a Blog</CardTitle>
+                  <CardDescription>
+                    Create and post blogs from here.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="">
+                </CardContent>
+                 <BlogPostForm/>
               </Card>
             </TabsContent>
           </Tabs>

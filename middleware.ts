@@ -9,14 +9,14 @@ export async function middleware(request: NextRequest) {
 
   if (request.nextUrl.pathname.startsWith('/admin')) {
     if (!token) {
-      return NextResponse.redirect(new URL('/admin/login', request.url))
+      return NextResponse.redirect(new URL('/', request.url))
     }
 
     try {
       await jwtVerify(token, secretKey)
       return NextResponse.next()
     } catch (error) {
-      return NextResponse.redirect(new URL('/admin/login', request.url))
+      return NextResponse.redirect(new URL('/', request.url))
     }
   }
 

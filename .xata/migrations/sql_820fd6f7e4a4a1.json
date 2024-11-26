@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_820fd6f7e4a4a1",
+    "operations": [
+      {
+        "sql": {
+          "up": "ALTER TABLE \"blog-table\" ADD COLUMN author_avatar text"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_820fd6f7e4a4a1",
+  "parent": "sql_349db39f18c96b",
+  "schema": "public",
+  "startedAt": "2024-11-26T11:53:02.194207Z"
+}

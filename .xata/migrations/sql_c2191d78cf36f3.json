@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_c2191d78cf36f3",
+    "operations": [
+      {
+        "sql": {
+          "up": "ALTER TABLE \"blog-table\" RENAME COLUMN coverimage TO cover_image"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_c2191d78cf36f3",
+  "parent": "sql_0e9cab57499de9",
+  "schema": "public",
+  "startedAt": "2024-11-26T11:01:04.635259Z"
+}

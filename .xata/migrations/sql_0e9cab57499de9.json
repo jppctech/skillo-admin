@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_0e9cab57499de9",
+    "operations": [
+      {
+        "sql": {
+          "up": "ALTER TABLE \"blog-table\" RENAME COLUMN publishdate TO publish_date"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_0e9cab57499de9",
+  "parent": "sql_d0191983866a03",
+  "schema": "public",
+  "startedAt": "2024-11-26T11:01:04.024811Z"
+}

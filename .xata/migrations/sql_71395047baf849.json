@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_71395047baf849",
+    "operations": [
+      {
+        "sql": {
+          "up": "ALTER TABLE \"blog-table\" ADD COLUMN author_role text NOT NULL"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_71395047baf849",
+  "parent": "sql_820fd6f7e4a4a1",
+  "schema": "public",
+  "startedAt": "2024-11-26T11:53:02.776882Z"
+}
