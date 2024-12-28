@@ -28,6 +28,9 @@ import { useGetContacts } from '@/features/api/use-get-contacts'
 import { FaBloggerB } from "react-icons/fa";
 import BlogPostForm from './blog-form'
 import * as XLSX from 'xlsx';
+import { OverviewDashboard } from './overview-dashboard'
+import { SettingsPanel } from './settings-panel'
+import Image from 'next/image'
 
 // Mock data
 const revenueData = [
@@ -39,12 +42,19 @@ const revenueData = [
   { name: 'Jun', total: 3800 },
 ]
 
+const navigationItems = [
+  { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+  { id: 'contacts', label: 'Contacts', icon: Mail },
+  { id: 'post-blog', label: 'Post Blog', icon: FaBloggerB },
+  { id: 'settings', label: 'Settings', icon: Settings }
+]
+
 export default function AdminDashboard() {
 
   const contactsQuery = useGetContacts()
   const contacts = contactsQuery.data || []
   
-  const [activeTab, setActiveTab] = useState("contacts")
+  const [activeTab, setActiveTab] = useState("overview")
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [filteredContacts, setFilteredContacts] = useState(contacts)
@@ -117,34 +127,25 @@ export default function AdminDashboard() {
         }`}
       >
         <div className="p-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">adbytehub Admin</h1>
+          <Image src="/logo1.webp" alt="adbytehub" width={150} height={150} className='invert'/>
+          {/* <h1 className="text-2xl font-bold text-gray-800">adbytehub Admin</h1> */}
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(false)}>
             <X className="h-6 w-6" />
           </Button>
         </div>
         <nav className="mt-6">
-          {[
-            // 'overview', 
-            'contacts', 
-            // 'team', 
-            // 'settings',
-            'Post Blog'
-          ].map((item) => (
+          {navigationItems.map((item) => (
             <Button
-              key={item}
+              key={item.id}
               variant="ghost"
               className="w-full justify-start transition-colors duration-200 ease-in-out hover:bg-gray-100"
               onClick={() => {
-                setActiveTab(item)
+                setActiveTab(item.id)
                 if (window.innerWidth < 1024) setSidebarOpen(false)
               }}
             >
-              {/* {item === 'overview' && <LayoutDashboard className="mr-2 h-4 w-4" />} */}
-              {item === 'contacts' && <Mail className="mr-2 h-4 w-4" />}
-              {/* {item === 'team' && <Users className="mr-2 h-4 w-4" />} */}
-              {/* {item === 'settings' && <Settings className="mr-2 h-4 w-4" />} */}
-              {item === 'Post Blog' && <FaBloggerB className="mr-2 h-4 w-4"/>}
-              {item.charAt(0).toUpperCase() + item.slice(1)}
+              {item.icon && <item.icon className="mr-2 h-4 w-4" />}
+              {item.label}
             </Button>
           ))}
         </nav>
@@ -205,60 +206,13 @@ export default function AdminDashboard() {
         <div className="p-6">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="mb-4">
-              {/* <TabsTrigger value="overview" className="transition-all duration-300 ease-in-out">Overview</TabsTrigger> */}
-              <TabsTrigger value="contacts" className="transition-all duration-300 ease-in-out">Contacts</TabsTrigger>
-              {/* <TabsTrigger value="team" className="transition-all duration-300 ease-in-out">Team</TabsTrigger> */}
-              {/* <TabsTrigger value="settings" className="transition-all duration-300 ease-in-out">Settings</TabsTrigger> */}
-              <TabsTrigger value="Post Blog" className="transition-all duration-300 ease-in-out">Post Blog</TabsTrigger>
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="contacts">Contacts</TabsTrigger>
+              <TabsTrigger value="post-blog">Post Blog</TabsTrigger>
+              <TabsTrigger value="settings">Settings</TabsTrigger>
             </TabsList>
-            <TabsContent value="overview" className="space-y-4">
-              <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-                {['Total Revenue', 'New Clients', 'Projects', 'Active Users'].map((title, index) => (
-                  <Card key={title} className="transition-all duration-300 ease-in-out hover:shadow-lg transform hover:-translate-y-1">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">
-                        {title}
-                      </CardTitle>
-                      {index === 0 && <DollarSign className="h-4 w-4 text-muted-foreground" />}
-                      {index === 1 && <Users className="h-4 w-4 text-muted-foreground" />}
-                      {index === 2 && <LayoutDashboard className="h-4 w-4 text-muted-foreground" />}
-                      {index === 3 && <Users className="h-4 w-4 text-muted-foreground" />}
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">{index === 0 ? '$45,231.89' : index === 1 ? '+12' : index === 2 ? '24' : '573'}</div>
-                      <p className="text-xs text-muted-foreground">
-                        {index === 0 ? '+20.1% from last month' : index === 1 ? '+10% from last month' : index === 2 ? '6 in progress' : '+201 since last hour'}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-              <Card className="transition-all duration-300 ease-in-out hover:shadow-lg">
-                <CardHeader>
-                  <CardTitle>Revenue Overview</CardTitle>
-                </CardHeader>
-                <CardContent className="pl-2">
-                  <ResponsiveContainer width="100%" height={350}>
-                    <BarChart data={revenueData}>
-                      <XAxis
-                        dataKey="name"
-                        stroke="#888888"
-                        fontSize={12}
-                        tickLine={false}
-                        axisLine={false}
-                      />
-                      <YAxis
-                        stroke="#888888"
-                        fontSize={12}
-                        tickLine={false}
-                        axisLine={false}
-                        tickFormatter={(value) => `$${value}`}
-                      />
-                      <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </CardContent>
-              </Card>
+            <TabsContent value="overview">
+              <OverviewDashboard contacts={contacts} />
             </TabsContent>
             <TabsContent value="contacts" className="space-y-4">
               <Card className="transition-all duration-300 ease-in-out hover:shadow-lg">
@@ -350,65 +304,7 @@ export default function AdminDashboard() {
                 </CardContent>
               </Card>
             </TabsContent>
-            <TabsContent value="team" className="space-y-4">
-              <Card className="transition-all duration-300 ease-in-out hover:shadow-lg">
-                <CardHeader>
-                  <CardTitle>Team Members</CardTitle>
-                  <CardDescription>
-                    Invite your team members to collaborate.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {[
-                      { name: "John Doe", email: "john@example.com", role: "Admin" },
-                      { name: "Jane Smith", email: "jane@example.com", role: "Editor" }
-                    ].map((member, index) => (
-                      <div key={index} className="flex items-center space-x-4 transition-transform duration-200 ease-in-out hover:translate-x-2">
-                        <Avatar>
-                          <AvatarImage src={`/avatars/0${index + 1}.png`} />
-                          <AvatarFallback>{member.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className="text-sm font-medium leading-none">{member.name}</p>
-                          <p className="text-sm text-muted-foreground">{member.email}</p>
-                        </div>
-                        <div className="ml-auto font-medium">{member.role}</div>
-                      </div>
-                    ))}
-                    <Button className="w-full transition-all duration-300 ease-in-out hover:bg-blue-600">
-                      <Users className="mr-2 h-4 w-4" />
-                      Invite Team Member
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            <TabsContent value="settings" className="space-y-4">
-              <Card className="transition-all duration-300 ease-in-out hover:shadow-lg">
-                <CardHeader>
-                  <CardTitle>Account Settings</CardTitle>
-                  <CardDescription>
-                    Manage your account settings and preferences.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {['Name', 'Email', 'Role'].map((field, index) => (
-                    <div key={field} className="space-y-1">
-                      <label htmlFor={field.toLowerCase()} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{field}</label>
-                      <Input 
-                        id={field.toLowerCase()} 
-                        defaultValue={index === 0 ? "John Doe" : index === 1 ? "john@example.com" : "Administrator"} 
-                        disabled={index === 2}
-                        className="transition-all duration-300 ease-in-out focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                  ))}
-                  <Button className="transition-all duration-300 ease-in-out hover:bg-blue-600">Save Changes</Button>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            <TabsContent value="Post Blog" className="space-y-4">
+            <TabsContent value="post-blog" className="space-y-4">
               <Card className="transition-all duration-300 ease-in-out hover:shadow-lg">
                 <CardHeader>
                   <CardTitle>Create a Blog</CardTitle>
@@ -420,6 +316,9 @@ export default function AdminDashboard() {
                 </CardContent>
                  <BlogPostForm/>
               </Card>
+            </TabsContent>
+            <TabsContent value="settings">
+              <SettingsPanel />
             </TabsContent>
           </Tabs>
         </div>
