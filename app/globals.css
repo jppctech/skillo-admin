@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Add these styles */
+.ql-container {
+  min-height: 100px;
+  font-size: 16px;
+}
+
+.ql-editor {
+  min-height: 100px;
+}
+
+.ql-editor p {
+  margin-bottom: 1em;
+}

@@ -23,10 +23,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Bell, DollarSign, LayoutDashboard, Mail, Menu, Search, Settings, Users, X } from 'lucide-react'
+import { Bell, DollarSign, LayoutDashboard, Mail, Menu, Search, Settings, Users, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useGetContacts } from '@/features/api/use-get-contacts'
 import { FaBloggerB } from "react-icons/fa";
 import BlogPostForm from './blog-form'
+import * as XLSX from 'xlsx';
 
 // Mock data
 const revenueData = [
@@ -47,7 +48,13 @@ export default function AdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [filteredContacts, setFilteredContacts] = useState(contacts)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage] = useState(10)
 
+  const indexOfLastItem = currentPage * itemsPerPage
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage
+  const currentContacts = filteredContacts.slice(indexOfFirstItem, indexOfLastItem)
+  const totalPages = Math.ceil(filteredContacts.length / itemsPerPage)
 
   const toggleSidebar = () => setSidebarOpen(prevState => !prevState)
 
@@ -76,6 +83,31 @@ export default function AdminDashboard() {
     setFilteredContacts(results)
   }, [searchTerm,contacts])
 
+  const handleExport = () => {
+    // Create a new workbook
+    const wb = XLSX.utils.book_new();
+    
+    // Convert contacts data to format suitable for Excel
+    const exportData = contacts.map(contact => ({
+      Name: contact.name,
+      Email: contact.email,
+      Phone: contact.phone,
+      Company: contact.company,
+      'Marketing Spend': contact.marketingSpend,
+      Location: contact.location,
+      'Skype ID': contact.content
+    }));
+
+    // Create worksheet
+    const ws = XLSX.utils.json_to_sheet(exportData);
+
+    // Add worksheet to workbook
+    XLSX.utils.book_append_sheet(wb, ws, "Contacts");
+
+    // Generate Excel file and trigger download
+    XLSX.writeFile(wb, "contacts_export.xlsx");
+  };
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -85,7 +117,7 @@ export default function AdminDashboard() {
         }`}
       >
         <div className="p-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">Skillo Admin</h1>
+          <h1 className="text-2xl font-bold text-gray-800">adbytehub Admin</h1>
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(false)}>
             <X className="h-6 w-6" />
           </Button>
@@ -136,7 +168,7 @@ export default function AdminDashboard() {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-              </div>
+              </div>    
             </div>
             <div className="flex items-center space-x-2">
               <Button variant="outline" size="icon" className="relative overflow-hidden transition-all duration-300 ease-in-out hover:bg-gray-100">
@@ -148,16 +180,16 @@ export default function AdminDashboard() {
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8 transition-transform duration-300 ease-in-out hover:scale-110">
                       <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-                      <AvatarFallback>SC</AvatarFallback>
+                      <AvatarFallback>AB</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56 bg-white" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">Jay Prakash</p>
+                      <p className="text-sm font-medium leading-none">adbytehub Admin</p>
                       <p className="text-xs leading-none text-muted-foreground">
-                        m@example.com
+                        info@adbytehub.com
                       </p>
                     </div>
                   </DropdownMenuLabel>
@@ -230,11 +262,23 @@ export default function AdminDashboard() {
             </TabsContent>
             <TabsContent value="contacts" className="space-y-4">
               <Card className="transition-all duration-300 ease-in-out hover:shadow-lg">
-                <CardHeader>
-                  <CardTitle>Recent Contacts</CardTitle>
-                  <CardDescription>
-                    You have {filteredContacts.length} contacts.
-                  </CardDescription>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <div>
+                    <CardTitle>Recent Contacts</CardTitle>
+                    <CardDescription>
+                      You have {filteredContacts.length} total contacts
+                    </CardDescription>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={handleExport}
+                    >
+                      Export
+                    </Button>
+                    {/* <Button size="sm">Add Contact</Button> */}
+                  </div>
                 </CardHeader>
                 <CardContent>
                   <Table className="w-full overflow-auto">
@@ -246,11 +290,11 @@ export default function AdminDashboard() {
                         <TableHead>Company</TableHead>
                         <TableHead>Marketing Spend</TableHead>
                         <TableHead>Location</TableHead>
-                        <TableHead>Interested In</TableHead>
+                        <TableHead>Skype ID</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredContacts.map((contact) => (
+                      {currentContacts.map((contact) => (
                         <TableRow key={contact.id} className="transition-colors duration-200 ease-in-out hover:bg-gray-100">
                           <TableCell className="font-medium">{contact.name}</TableCell>
                           <TableCell>{contact.email}</TableCell>
@@ -263,6 +307,46 @@ export default function AdminDashboard() {
                       ))}
                     </TableBody>
                   </Table>
+                  
+                  <div className="flex items-center justify-between px-2 py-4">
+                    <p className="text-sm text-gray-700">
+                      Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, filteredContacts.length)} of{" "}
+                      {filteredContacts.length} entries
+                    </p>
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                        Previous
+                      </Button>
+                      <div className="flex items-center space-x-1">
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                          <Button
+                            key={page}
+                            variant={currentPage === page ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => setCurrentPage(page)}
+                            className="w-8"
+                          >
+                            {page}
+                          </Button>
+                        ))}
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                      >
+                        Next
+                        <ChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
