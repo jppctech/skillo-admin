@@ -10,8 +10,8 @@ export async function login(formData: FormData) {
   const password = formData.get('password')
 
   // Hardcoded credentials
-  const ADMIN_USERNAME = 'admin'
-  const ADMIN_PASSWORD = 'admin@258'
+  const ADMIN_USERNAME = 'adbytehub'
+  const ADMIN_PASSWORD = 'Adbytehub@8585'
 
   if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
     // Create a JWT token

@@ -119,16 +119,16 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-white">
       {/* Sidebar */}
-      <aside 
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-md transition-transform duration-300 ease-in-out transform lg:relative lg:translate-x-0 ${
+      {/* <aside 
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-tr from-emerald-400 to-purple-400 shadow-md transition-transform duration-300 ease-in-out transform lg:relative lg:translate-x-0 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="p-4 flex justify-between items-center">
-          <Image src="/logo1.webp" alt="adbytehub" width={150} height={150} className='invert'/>
-          {/* <h1 className="text-2xl font-bold text-gray-800">adbytehub Admin</h1> */}
+          <Image src="/logo1.png" alt="adbytehub" width={150} height={150} className=''/>
+          <h1 className="text-2xl font-bold text-gray-800">adbytehub Admin</h1>
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(false)}>
             <X className="h-6 w-6" />
           </Button>
@@ -138,7 +138,7 @@ export default function AdminDashboard() {
             <Button
               key={item.id}
               variant="ghost"
-              className="w-full justify-start transition-colors duration-200 ease-in-out hover:bg-gray-100"
+              className="w-full text-white justify-start transition-colors duration-200 ease-in-out hover:bg-gray-100"
               onClick={() => {
                 setActiveTab(item.id)
                 if (window.innerWidth < 1024) setSidebarOpen(false)
@@ -149,12 +149,12 @@ export default function AdminDashboard() {
             </Button>
           ))}
         </nav>
-      </aside>
+      </aside> */}
 
       {/* Main content */}
       <main className="flex-1 overflow-y-auto p-4 lg:p-6 transition-all duration-300 ease-in-out">
         {/* Header */}
-        <header className="bg-white shadow-sm rounded-lg mb-6">
+        <header className="bg-gray-100 shadow-sm rounded-[15px] mb-6">
           <div className="flex items-center justify-between px-4 py-4">
             <div className="flex items-center">
               <Button variant="ghost" size="icon" className="lg:hidden mr-2" onClick={toggleSidebar}>
@@ -165,7 +165,7 @@ export default function AdminDashboard() {
                 <Input
                   type="search"
                   placeholder="Search..."
-                  className="w-full max-w-[300px] pl-8 transition-all duration-300 ease-in-out focus:max-w-[400px]"
+                  className="w-full max-w-[300px] pl-8 transition-all duration-300 ease-in-out  rounded-[10px] border-gray-400 focus:max-w-[400px]"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
         {/* Dashboard content */}
         <div className="p-6">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="mb-4">
+            <TabsList className="mb-4 bg-gray-100 gap-4 p-4 rounded-[5px] h-12 text-gray-600">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="contacts">Contacts</TabsTrigger>
               <TabsTrigger value="post-blog">Post Blog</TabsTrigger>

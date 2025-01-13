@@ -98,7 +98,7 @@ export function OverviewDashboard({ contacts }: OverviewDashboardProps) {
               />
               <Bar 
                 dataKey="total" 
-                fill="#adfa1d" 
+                fill="#C1E1C1" 
                 radius={[4, 4, 0, 0]}
                 className="transition-all duration-300 hover:fill-opacity-80" 
               />
