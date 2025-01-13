@@ -16,7 +16,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "ad byte hub",
+  title: "adbytehub",
   description: "this is a marketing website",
 };
 
