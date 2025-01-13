@@ -1,4 +1,4 @@
-import { pgTable, text } from "drizzle-orm/pg-core";
+import { date, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod"
 
 
@@ -21,7 +21,7 @@ export const blogTable = pgTable("blog-table", {
     title: text("title").notNull(),
     subtitle:  text("sub_title").notNull(),
     content:  text("content").notNull(),
-    publishdate:  text("publish_date"),
+    publishdate:  timestamp("publish_date").defaultNow(),
     coverimage:  text("cover_image").notNull(),
     authorName:  text("author").notNull(),
     authorAvatar: text("author_avatar"),

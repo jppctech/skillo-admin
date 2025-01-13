@@ -24,7 +24,6 @@ const app = new Hono()
 
             const [data] = await db.insert(blogTable).values({
                 id: createId(),
-                publishdate: String(Date.now()),
                 ...values
             }).returning();
 
