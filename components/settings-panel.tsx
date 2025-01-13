@@ -25,7 +25,6 @@ export function SettingsPanel() {
 
   return (
     <Card className="w-full max-w-2xl mx-auto shadow-lg p-4">
-      // in development
       <Tabs defaultValue="profile" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="profile" className="data-[state=active]:bg-gray-100">

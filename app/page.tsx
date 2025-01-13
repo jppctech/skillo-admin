@@ -31,7 +31,7 @@ export default function AdminLogin() {
           <div className="max-w-md">
             <h1 className="text-4xl font-light mb-6">Welcome</h1>
             <p className="text-lg opacity-90 mb-12">
-            Adbytehub – The ultimate open-source admin panel for your Node.js application. Seamlessly manage all your data in one place with ease and efficiency. Simplify your workflows and take control of your application's backend like never before.            </p>
+            Adbytehub – Admin panel for managing adbytehub a performance marketing company</p>
           </div>
           
           {/* Hexagon Icons Grid */}
